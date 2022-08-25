@@ -39,7 +39,7 @@ class ProductManagerTest {
     @Test
     void searchBy() {
         Book book1 = new Book(1, "book1", 100, "Vasya Pupkin");
-        Smartphone phone1 = new Smartphone(1, "phone1", 200, "Apple");
+        Smartphone phone1 = new Smartphone(2, "phone1", 200, "Apple");
         Product[] expectedProduct = new Product[1];
         expectedProduct[0] = phone1;
 
@@ -57,7 +57,7 @@ class ProductManagerTest {
     @Test
     void shouldNotFound() {
         Book book1 = new Book(1, "book1", 100, "Vasya Pupkin");
-        Smartphone phone1 = new Smartphone(1, "phone1", 200, "Apple");
+        Smartphone phone1 = new Smartphone(2, "phone1", 200, "Apple");
         Product[] expectedProduct = new Product[0];
 
         ProductRepository repository = new ProductRepository();
@@ -74,7 +74,7 @@ class ProductManagerTest {
     @Test
     void matches() {
         Book book1 = new Book(1, "book1", 100, "Vasya Pupkin");
-        Smartphone phone1 = new Smartphone(1, "phone1", 200, "Apple");
+        Smartphone phone1 = new Smartphone(2, "phone1", 200, "Apple");
         Product[] expectedProduct = new Product[1];
         expectedProduct[0] = phone1;
 
@@ -92,7 +92,7 @@ class ProductManagerTest {
     @Test
     void shouldAllMatches() {
         Book book1 = new Book(1, "book about phone", 100, "Vasya Pupkin");
-        Smartphone phone1 = new Smartphone(1, "phone", 200, "Apple");
+        Smartphone phone1 = new Smartphone(2, "phone", 200, "Apple");
         Product[] expectedProduct = new Product[2];
         expectedProduct[0] = book1;
         expectedProduct[1] = phone1;
@@ -106,5 +106,24 @@ class ProductManagerTest {
         Product[] foundedProduct = productManager.searchBy("phone");
 
         assertArrayEquals(expectedProduct, foundedProduct);
+    }
+
+    @Test
+    public void shouldRemoveAllItems() {
+        ProductRepository productRepository = new ProductRepository();
+
+        Book book1 = new Book(1, "book about phone", 100, "Vasya Pupkin");
+        Smartphone phone1 = new Smartphone(2, "phone", 200, "Apple");
+        Product[] expectedProduct = new Product[1];
+        expectedProduct[0] = phone1;
+
+        productRepository.save(book1);
+        productRepository.save(phone1);
+
+        productRepository.removeById(1);
+
+        Product[] finallyProduct = productRepository.findAll();
+
+        assertArrayEquals(expectedProduct, finallyProduct);
     }
 }
