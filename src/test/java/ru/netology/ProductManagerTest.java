@@ -19,7 +19,7 @@ class ProductManagerTest {
 
         productManager.add(book1);
 
-        Product[] foundedProduct = productManager.searchBy("phone1");
+        Product[] foundedProduct = productManager.searchBy("book1");
 
         assertArrayEquals(expectedProduct, foundedProduct);
     }
